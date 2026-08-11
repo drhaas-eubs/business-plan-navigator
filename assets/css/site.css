@@ -1,0 +1,216 @@
+/* ═══════════════════════════════════════════════════════════
+   EUBS Capstone Navigator — shared house style
+   Palette and type inherited from MARTI301 (Dr. H. Haas, 2026)
+   ═══════════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1B2A4A;--teal:#00B388;--amber:#D4872C;--coral:#E85D4A;
+  --bg:#FAFBFC;--card:#FFF;--text:#1B2A4A;--muted:#6B7280;--border:#E5E7EB;
+  /* Part palette — Itten-informed, consistent with the MARTI301 unit logic
+     P1 Deep Blue  — orientation, contract, approval  (The Proposal)
+     P2 Steel Blue — rigour, evidence, analysis       (The Business Plan)
+     P3 Amber      — performance, delivery, audience  (The Defense)      */
+  --p1:#1E40AF;--p2:#2563EB;--p3:#B45309;
+  --p1-light:#DBEAFE;--p2-light:#E0F2FE;--p3-light:#FEF3C7;
+  --ok:#1E8E3E;--warn:#F5A623;--stop:#D93025;
+}
+html{scroll-behavior:smooth}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+
+/* ─── HERO ─────────────────────────────────────────── */
+.hero{background:var(--navy);padding:3rem 2rem 2.5rem;text-align:center;position:relative}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--teal)}
+.hero-pre{font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--amber);font-weight:700;margin-bottom:.6rem}
+.hero h1{font-size:2.2rem;color:#fff;font-weight:700;line-height:1.2;margin-bottom:.3rem}
+.hero .sub{color:#94A3B8;font-size:1rem;margin-bottom:.6rem}
+.hero .copy{color:#64748B;font-size:.78rem;font-style:italic}
+.stats{display:flex;justify-content:center;gap:2.5rem;margin-top:1.5rem;flex-wrap:wrap}
+.stat{text-align:center}
+.stat .n{font-size:2rem;color:var(--teal);font-weight:700;line-height:1}
+.stat .l{font-size:.65rem;color:#94A3B8;text-transform:uppercase;letter-spacing:.15em;margin-top:.2rem}
+
+/* ─── BREADCRUMB / NAV ─────────────────────────────── */
+.crumb{max-width:980px;margin:1.2rem auto 0;padding:0 1.5rem;font-size:.75rem;color:var(--muted)}
+.crumb a{color:var(--teal);font-weight:600}
+.crumb a:hover{text-decoration:underline}
+.topnav{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:40}
+.topnav-in{max-width:980px;margin:0 auto;padding:.55rem 1.5rem;display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}
+.topnav a{font-size:.75rem;font-weight:600;color:var(--muted);padding:.3rem .6rem;border-radius:6px;transition:all .15s}
+.topnav a:hover{background:#F1F5F9;color:var(--navy)}
+.topnav a.active{background:var(--navy);color:#fff}
+
+/* ─── SEARCH ───────────────────────────────────────── */
+.search-wrap{max-width:980px;margin:1.5rem auto .5rem;padding:0 1.5rem}
+.search-box{position:relative}
+.search-box input{width:100%;padding:.7rem 1rem .7rem 2.6rem;border:1px solid var(--border);border-radius:10px;font-family:Arial,Helvetica,sans-serif;font-size:.9rem;background:#fff;color:var(--text);outline:none;transition:border-color .15s,box-shadow .15s}
+.search-box input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,179,136,.12)}
+.search-box input::placeholder{color:#94A3B8}
+.search-icon{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);color:#94A3B8;font-size:.95rem;pointer-events:none}
+
+/* ─── SECTION LABEL ────────────────────────────────── */
+.section-title{max-width:980px;margin:2rem auto 1rem;padding:0 1.5rem;font-size:1.1rem;color:var(--navy);font-weight:700}
+.section-note{max-width:980px;margin:-.6rem auto 1rem;padding:0 1.5rem;font-size:.8rem;color:var(--muted);line-height:1.6}
+
+/* ─── PART / UNIT ACCORDION ────────────────────────── */
+.units{max-width:980px;margin:0 auto 2rem;padding:0 1.5rem;display:flex;flex-direction:column;gap:.8rem}
+.unit{background:var(--card);border-radius:12px;border:1px solid var(--border);overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.unit.search-hidden{display:none}
+.unit-header{display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;cursor:pointer;user-select:none;transition:background .15s}
+.unit-header:hover{background:#F8FAFC}
+.unit-num{width:2.2rem;height:2.2rem;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;color:#fff;flex-shrink:0}
+.unit-info{flex:1;min-width:0}
+.unit-title{font-size:.95rem;font-weight:700;color:var(--navy);line-height:1.3}
+.unit-format{display:inline-block;font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.12rem .45rem;border-radius:3px;margin-top:.2rem;color:var(--muted);background:#F1F5F9;border:1px solid var(--border)}
+.unit-toggle{font-size:1.2rem;color:var(--muted);transition:transform .2s;flex-shrink:0}
+.unit.open .unit-toggle{transform:rotate(180deg)}
+.unit-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.unit.open .unit-body{max-height:3000px}
+.unit-links{padding:.4rem 1.2rem 1rem;display:flex;flex-direction:column;gap:.4rem}
+.link-card{display:flex;align-items:center;gap:.7rem;padding:.6rem .8rem;border-radius:8px;border:1px solid var(--border);transition:all .15s}
+.link-card:hover{border-color:var(--teal);box-shadow:0 2px 8px rgba(0,179,136,.1);transform:translateY(-1px)}
+.link-badge{width:1.8rem;height:1.8rem;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:#fff;flex-shrink:0}
+.link-body{flex:1;min-width:0}
+.link-title{font-size:.85rem;font-weight:600;color:var(--navy)}
+.link-desc{font-size:.72rem;color:var(--muted)}
+.link-tag{font-size:.62rem;color:var(--muted);font-weight:500;flex-shrink:0}
+
+/* ─── CHAPTER CARDS (Part pages) ───────────────────── */
+.wrap{max-width:980px;margin:0 auto 2rem;padding:0 1.5rem}
+.chapter{background:#fff;border:1px solid var(--border);border-left:4px solid var(--p2);border-radius:10px;padding:1.2rem 1.3rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.chapter h3{font-size:1rem;color:var(--navy);margin-bottom:.15rem}
+.chapter .weight{display:inline-block;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.15rem .5rem;border-radius:3px;background:var(--p2-light);color:var(--p2);margin-bottom:.6rem}
+.chapter p.lede{font-size:.85rem;color:var(--muted);margin-bottom:.8rem;line-height:1.65}
+.subhead{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:.9rem 0 .4rem}
+.pill-row{display:flex;flex-wrap:wrap;gap:.35rem}
+.pill{font-size:.72rem;padding:.28rem .6rem;border-radius:20px;background:#F1F5F9;border:1px solid var(--border);color:var(--navy);font-weight:600;cursor:pointer;transition:all .15s}
+.pill:hover{border-color:var(--teal);background:#F0FDF9}
+.kpi-table{width:100%;border-collapse:collapse;font-size:.78rem;margin-top:.3rem}
+.kpi-table th{background:var(--navy);color:#fff;text-align:left;padding:.4rem .55rem;font-size:.68rem;letter-spacing:.05em;text-transform:uppercase}
+.kpi-table td{border-bottom:1px solid var(--border);padding:.4rem .55rem;vertical-align:top}
+.kpi-table tr:hover td{background:#F8FAFC}
+.arrow-up{color:var(--ok);font-weight:700}
+.arrow-dn{color:var(--stop);font-weight:700}
+.arrow-eq{color:var(--muted);font-weight:700}
+.cite{font-size:.72rem;color:var(--muted);font-style:italic;line-height:1.6;margin-top:.5rem}
+.cite a{color:var(--teal)}
+
+/* ─── CALLOUT ──────────────────────────────────────── */
+.callout{border-radius:8px;padding:.8rem 1rem;font-size:.8rem;line-height:1.6;margin:.9rem 0}
+.callout.must{background:#FEF2F2;border:1px solid #FECACA;color:#7F1D1D}
+.callout.tip{background:#F0FDF9;border:1px solid #A7F3D0;color:#065F46}
+.callout.note{background:#F8FAFC;border:1px solid var(--border);color:var(--muted)}
+.callout strong{font-weight:700}
+
+/* ─── GALLERY GRID ─────────────────────────────────── */
+.gal{max-width:1120px;margin:0 auto 2.5rem;padding:0 1.5rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.9rem}
+.fw{background:#fff;border:1px solid var(--border);border-radius:10px;padding:.9rem 1rem;transition:all .15s;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.fw:hover{border-color:var(--teal);transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,179,136,.12)}
+.fw.hide{display:none}
+.fw .tag{display:inline-block;font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.14rem .45rem;border-radius:3px;color:#fff;margin-bottom:.45rem}
+.fw h4{font-size:.88rem;color:var(--navy);margin-bottom:.2rem;line-height:1.3}
+.fw .auth{font-size:.7rem;color:var(--teal);font-weight:600;margin-bottom:.4rem}
+.fw .use{font-size:.75rem;color:var(--muted);line-height:1.55}
+.fw .where{font-size:.66rem;color:var(--navy);margin-top:.5rem;font-weight:600}
+
+/* ─── FILTER BAR ───────────────────────────────────── */
+.filters{max-width:1120px;margin:0 auto 1rem;padding:0 1.5rem;display:flex;flex-wrap:wrap;gap:.35rem}
+.filt{font-size:.72rem;padding:.35rem .7rem;border-radius:20px;background:#fff;border:1px solid var(--border);color:var(--muted);font-weight:600;cursor:pointer;transition:all .15s}
+.filt:hover{border-color:var(--teal)}
+.filt.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* ─── AUTHOR CARDS ─────────────────────────────────── */
+.auth-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:1rem;box-shadow:0 1px 3px rgba(0,0,0,.04);transition:all .15s}
+.auth-card:hover{border-color:var(--teal);transform:translateY(-2px)}
+.auth-card .init{width:2.4rem;height:2.4rem;border-radius:50%;background:var(--navy);color:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;margin-bottom:.5rem}
+.auth-card h4{font-size:.88rem;color:var(--navy)}
+.auth-card .yrs{font-size:.68rem;color:var(--muted);margin-bottom:.4rem}
+.auth-card .contrib{font-size:.75rem;color:var(--muted);line-height:1.55}
+.auth-card .ref{font-size:.68rem;color:var(--navy);margin-top:.5rem;line-height:1.5;border-top:1px solid var(--border);padding-top:.45rem}
+
+/* ─── THUMBNAIL STORYBOARD ─────────────────────────── */
+.board{max-width:1120px;margin:0 auto 2rem;padding:0 1.5rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:.8rem}
+.thumb{background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.05);display:flex;flex-direction:column}
+.thumb .tno{background:var(--navy);color:#fff;font-size:.62rem;font-weight:700;letter-spacing:.1em;padding:.3rem .6rem;display:flex;justify-content:space-between}
+.thumb .tno span{color:var(--teal)}
+.thumb .tbody{padding:.7rem;flex:1}
+.thumb .tmsg{font-size:.8rem;font-weight:700;color:var(--navy);line-height:1.35;margin-bottom:.35rem}
+.thumb .tvis{font-size:.7rem;color:var(--muted);line-height:1.5}
+.thumb .tfw{font-size:.63rem;color:var(--teal);font-weight:600;margin-top:.45rem}
+.thumb .ttime{background:#F8FAFC;border-top:1px solid var(--border);font-size:.62rem;color:var(--muted);padding:.28rem .7rem}
+
+/* ─── REFERENCE LIST ───────────────────────────────── */
+.refs{max-width:980px;margin:0 auto 2rem;padding:0 1.5rem}
+.ref-item{font-size:.8rem;line-height:1.7;padding-left:2rem;text-indent:-2rem;margin-bottom:.6rem;color:var(--text)}
+.ref-item.hide{display:none}
+.ref-item em{font-style:italic}
+
+/* ─── BUTTONS ──────────────────────────────────────── */
+.gallery-link{max-width:980px;margin:1rem auto 2rem;padding:0 1.5rem;display:flex;flex-direction:column;gap:.6rem}
+.gallery-link a{display:block;padding:1rem 1.5rem;background:var(--navy);color:#fff;border-radius:10px;text-align:center;font-weight:700;font-size:.95rem;transition:all .15s}
+.gallery-link a:hover{background:#243656;transform:translateY(-1px)}
+.gallery-link a span{color:var(--teal)}
+
+/* ─── MODAL ────────────────────────────────────────── */
+.modal{position:fixed;inset:0;background:rgba(27,42,74,.6);display:none;align-items:center;justify-content:center;z-index:100;padding:1.5rem}
+.modal.on{display:flex}
+.modal-in{background:#fff;border-radius:12px;max-width:560px;width:100%;max-height:82vh;overflow-y:auto;padding:1.6rem}
+.modal-in h3{font-size:1.1rem;color:var(--navy);margin-bottom:.2rem}
+.modal-in .m-auth{font-size:.78rem;color:var(--teal);font-weight:600;margin-bottom:.9rem}
+.modal-in .m-lab{font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:.9rem 0 .3rem}
+.modal-in p{font-size:.85rem;line-height:1.65;color:var(--text)}
+.modal-close{float:right;font-size:1.3rem;color:var(--muted);cursor:pointer;line-height:1}
+
+/* ─── FOOTER ───────────────────────────────────────── */
+footer{background:var(--navy);padding:2rem;text-align:center;color:#64748B;font-size:.75rem;line-height:1.8}
+footer strong{color:var(--teal)}
+footer a{color:#94A3B8;text-decoration:underline}
+
+@media(max-width:600px){
+  .hero h1{font-size:1.5rem}
+  .stats{gap:1.5rem}
+  .stat .n{font-size:1.5rem}
+  .kpi-table{font-size:.7rem}
+}
+@media print{
+  .topnav,.search-wrap,.filters,.modal{display:none!important}
+  .unit-body{max-height:none!important}
+  body{background:#fff}
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CONTENT PROTECTION
+   Disables selection, drag and print rendering of body content.
+   Form fields stay fully interactive so search continues to work.
+   ═══════════════════════════════════════════════════════════ */
+body{
+  -webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;
+  -webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;
+}
+input,textarea,[contenteditable="true"]{
+  -webkit-user-select:text!important;-moz-user-select:text!important;user-select:text!important;
+}
+img,svg{-webkit-user-drag:none;user-drag:none;pointer-events:auto}
+::selection{background:transparent;color:inherit}
+::-moz-selection{background:transparent;color:inherit}
+
+/* toast shown when a copy attempt is intercepted */
+#cp-toast{
+  position:fixed;left:50%;bottom:1.6rem;transform:translateX(-50%) translateY(140%);
+  background:var(--navy);color:#fff;font-family:Arial,Helvetica,sans-serif;font-size:.8rem;
+  line-height:1.5;padding:.75rem 1.1rem;border-radius:9px;max-width:min(520px,90vw);
+  box-shadow:0 8px 28px rgba(27,42,74,.28);border-left:4px solid var(--teal);
+  opacity:0;transition:transform .28s ease,opacity .28s ease;z-index:999;text-align:center;
+  pointer-events:none;
+}
+#cp-toast.on{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* print: replace the page with a notice rather than the content */
+@media print{
+  body>*{display:none!important}
+  body::after{
+    display:block!important;content:"The Business Plan Navigator \00A0·\00A0 © 2026 Prof. Dr. Hildegard Haas, EU Business School Munich.\A\A This teaching material is not available for printing or download.\A Please consult it online and cite the sources listed beside each framework.";
+    white-space:pre-wrap;font-family:Arial,Helvetica,sans-serif;font-size:12pt;line-height:1.7;
+    padding:4cm 2cm;text-align:center;color:#1B2A4A;
+  }
+}
